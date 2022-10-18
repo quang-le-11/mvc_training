@@ -2,6 +2,9 @@
 
 class Database
 {
+    /**
+     * @var PDO|null
+     */
     private $__conn;
 
     public function __construct()
@@ -10,6 +13,13 @@ class Database
         $this->__conn = Connection::getInstance($db_config);
     }
 
+    /**
+     * Insert data in database
+     *
+     * @param $table
+     * @param $data
+     * @return bool
+     */
     public function insert($table, $data)
     {
         if (!empty($table)) {
@@ -31,6 +41,14 @@ class Database
         return false;
     }
 
+    /**
+     * Update Data
+     *
+     * @param $table
+     * @param $data
+     * @param $condition
+     * @return bool
+     */
     public function update($table, $data, $condition = '')
     {
         if (!empty($data)) {
@@ -53,6 +71,13 @@ class Database
         return false;
     }
 
+    /**
+     * Delete
+     *
+     * @param $table
+     * @param $condition
+     * @return bool
+     */
     public function delete($table, $condition = '')
     {
         if (!empty($condition)) {
@@ -67,13 +92,29 @@ class Database
         return false;
     }
 
+    /**
+     * Queue data
+     *
+     * @param $sql
+     * @return false|PDOStatement
+     */
     public function query($sql)
     {
-        $statement = $this->__conn->prepare($sql);
-        $statement->execute();
-        return $statement;
+        try {
+            $statement = $this->__conn->prepare($sql);
+            $statement->execute();
+            return $statement;
+        } catch (Exception $exception) {
+            $mess = $exception->getMessage();
+            $data['message'] = $mess;
+            App::$app->loadError('database', $data);
+            die();
+        }
     }
 
+    /**
+     * @return false|string
+     */
     public function lastInsertId()
     {
         return $this->__conn->lastInsertId();

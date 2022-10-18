@@ -12,6 +12,9 @@ class Home extends Controller
     public function index()
     {
         $data = $this->_model->getList();
+       // $data = $this->_model->first();
+
+        var_dump($data);
     }
 
     public function detail()

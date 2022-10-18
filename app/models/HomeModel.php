@@ -4,11 +4,19 @@ class HomeModel extends Model
 {
     protected $_table = 'products';
 
+    public function tableFill()
+    {
+        return 'products';
+    }
+
+    public function fieldFill()
+    {
+        return 'name_product';
+    }
     public function getList()
     {
        $data = $this->db->query("SELECT * FROM $this->_table")->fetchAll(PDO::FETCH_ASSOC);
-       var_dump($data);
-       return $data;
+       return $this->get();
     }
 
     public function getDetail($id)
@@ -19,4 +27,6 @@ class HomeModel extends Model
         ];
         return $data[$id];
     }
+
+
 }

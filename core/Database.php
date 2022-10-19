@@ -7,6 +7,8 @@ class Database
      */
     private $__conn;
 
+    use QueryBuilder;
+
     public function __construct()
     {
         global $db_config;

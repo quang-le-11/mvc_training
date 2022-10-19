@@ -7,6 +7,8 @@ abstract class Model extends Database
 {
     protected $db;
 
+    use QueryBuilder;
+
     public function __construct()
     {
         $this->db = new Database();

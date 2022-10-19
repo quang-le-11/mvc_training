@@ -11,11 +11,6 @@ class Home extends Controller
 
     public function index()
     {
-        $data = $this->_model->getList();
-    }
-
-    public function detail()
-    {
-
+     $this->_model->getListProducts();
     }
 }
